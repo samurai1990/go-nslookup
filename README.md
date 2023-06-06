@@ -6,3 +6,8 @@ In this code, the `Selenium` package is used, which can be used to get the `IP a
 ```
 go build -ldflags "-linkmode 'external' -extldflags '-static'" -o go_nslookup
 ```
+
+#### install chromedriver on ubuntu :
+```
+sudo apt-get install chromium-chromedriver
+```
