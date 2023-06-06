@@ -1,0 +1,7 @@
+## vscode config
+.vscode/*
+.vscode
+
+
+## build app
+go_nslookup
