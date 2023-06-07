@@ -34,7 +34,8 @@ func main() {
 	}
 	defer driver.Quit()
 
-	driver.Get(fmt.Sprintf("https://www.nslookup.io/domains/%s/dns-records/", os.Args[1]))
+	query := fmt.Sprintf("https://www.nslookup.io/domains/%s/dns-records/", os.Args[1])
+	driver.Get(query)
 
 	links, err := driver.FindElements(selenium.ByClassName, "py-1")
 	if err != nil {
@@ -42,11 +43,13 @@ func main() {
 	}
 
 	for _, link := range links {
-		if ip, err := link.Text(); err == nil {
-			parsedIP := net.ParseIP(ip)
-			if parsedIP.To4() != nil {
-				fmt.Printf("A records %s : %s \n", os.Args[1], ip)
-				break
+		if elm, err := link.FindElement(selenium.ByTagName, "span"); err == nil {
+			if ip, err := elm.Text(); err == nil {
+				parsedIP := net.ParseIP(ip)
+				if parsedIP.To4() != nil {
+					fmt.Printf("A records %s : %s \n", os.Args[1], ip)
+					break
+				}
 			}
 		}
 	}
